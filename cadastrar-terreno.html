@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastrar Terreno | HortaConecta</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Folha de Estilo Global -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- BARRA LATERAL DE NAVEGAÇÃO (Consistente com a Dashboard) -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-seedling"></i>
+        <span>HortaConecta</span>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="menu-item">
+          <a href="dashboard.html#mapa">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <span>Mapeamento & Mapa</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="dashboard.html#plantio">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Guia de Plantio</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="dashboard.html#calendario">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Calendário</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="dashboard.html#insumos">
+            <i class="fa-solid fa-toolbox"></i>
+            <span>Banco de Insumos</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="dashboard.html#marketplace">
+            <i class="fa-solid fa-store"></i>
+            <span>Marketplace & Doação</span>
+          </a>
+        </li>
+        <li class="menu-item active">
+          <a href="cadastrar-terreno.html">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span>Cadastrar Terreno</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Painel de Perfil no Rodapé -->
+      <div class="sidebar-profile">
+        <div class="profile-avatar" id="user-avatar">U</div>
+        <div class="profile-info">
+          <h4 id="user-name">Carregando...</h4>
+          <p id="user-profile">Perfil</p>
+        </div>
+        <button class="logout-btn" id="logout-button" title="Sair da plataforma">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL (FORMULÁRIO DE TERRENO) -->
+    <main class="main-content">
+      
+      <header class="content-header">
+        <div>
+          <h1>Disponibilizar Área Ociosa</h1>
+          <p>Cadastre seu terreno no sistema para que cooperativas e comunidades possam recuperá-lo.</p>
+        </div>
+        <a href="dashboard.html" class="btn-outline"><i class="fa-solid fa-arrow-left"></i> Voltar ao Painel</a>
+      </header>
+
+      <div class="form-card">
+        <form id="land-registration-form">
+          <div class="form-grid">
+            
+            <!-- Endereço Completo -->
+            <div class="form-group form-full-width">
+              <label for="land-address">Endereço Completo do Terreno</label>
+              <input type="text" id="land-address" class="form-control" placeholder="Rua, Número, Bairro, Cidade - Estado" required>
+            </div>
+
+            <!-- Título / Apelido do Terreno -->
+            <div class="form-group">
+              <label for="land-title">Apelido do Local (Ex: Loteamento Solar)</label>
+              <input type="text" id="land-title" class="form-control" placeholder="Ex: Quintal da Vó Maria" required>
+            </div>
+
+            <!-- Tamanho da Área -->
+            <div class="form-group">
+              <label for="land-size">Tamanho da Área (m²)</label>
+              <input type="number" id="land-size" class="form-control" placeholder="Ex: 200" min="10" required>
+            </div>
+
+            <!-- Incidência Solar -->
+            <div class="form-group">
+              <label for="land-sun">Incidência Solar Média</label>
+              <select id="land-sun" class="form-control" required>
+                <option value="" disabled selected>Selecione...</option>
+                <option value="Alta">Alta (Sol direto a maior parte do dia)</option>
+                <option value="Média">Média (Sombra parcial / Sol matinal)</option>
+                <option value="Baixa">Baixa (Muita sombra / Prédios ao redor)</option>
+              </select>
+            </div>
+
+            <!-- Disponibilidade de Água -->
+            <div class="form-group">
+              <label for="land-water">Disponibilidade de Água Fácil?</label>
+              <select id="land-water" class="form-control" required>
+                <option value="" disabled selected>Selecione...</option>
+                <option value="Sim">Sim (Torneira / Poço / Captação próxima)</option>
+                <option value="Não">Não (Necessita trazer água externa)</option>
+              </select>
+            </div>
+
+            <!-- Histórico do Solo -->
+            <div class="form-group form-full-width">
+              <label for="land-soil">Histórico do Solo / Detalhes de Acesso</label>
+              <textarea id="land-soil" class="form-control" rows="3" placeholder="Conte brevemente o que havia neste solo (ex: gramado, entulho limpo, pasto) e se há trancas ou portões de acesso." required></textarea>
+            </div>
+
+            <!-- Upload de Fotos (Drag & Drop) -->
+            <div class="form-group form-full-width">
+              <label>Imagens e Fotos do Local</label>
+              <div class="drag-drop-area" id="drop-zone">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>Arraste e solte fotos do terreno aqui ou clique para selecionar</p>
+                <span>Formatos suportados: JPG, PNG (Max 5MB)</span>
+                <input type="file" id="file-input" accept="image/*" multiple style="display: none;">
+              </div>
+              
+              <!-- Grid de thumbnails gerados -->
+              <div class="thumbnail-grid" id="thumbnails-container"></div>
+            </div>
+
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+            <a href="dashboard.html" class="btn-outline" style="display: inline-flex; align-items: center;">Cancelar</a>
+            <button type="submit" class="btn-primary">
+              Cadastrar Terreno <i class="fa-solid fa-circle-check"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL DE FEEDBACK DE SUCESSO -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-content">
+      <div class="modal-icon">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3>Terreno Cadastrado!</h3>
+      <p>O local foi inserido na nossa base de dados ESG e já está visível para toda a rede no mapa interativo.</p>
+      <button class="btn-primary" id="btn-go-dashboard" style="margin: 0 auto; padding: 12px 24px;">
+        Ir para o Mapa
+      </button>
+    </div>
+  </div>
+
+  <!-- Banco de Dados Simulado -->
+  <script src="js/data.js"></script>
+  <!-- Lógica da Página de Cadastro de Terreno -->
+  <script>
+    // Validação de Sessão
+    const currentUser = HortaDb.getCurrentUser();
+    if (!currentUser) {
+      window.location.href = 'login.html';
+    }
+
+    // Carregar informações do perfil logado
+    document.getElementById('user-name').innerText = currentUser.name;
+    document.getElementById('user-profile').innerText = `Perfil: ${currentUser.profile}`;
+    document.getElementById('user-avatar').innerText = currentUser.name.charAt(0).toUpperCase();
+
+    // Evento Logout
+    document.getElementById('logout-button').addEventListener('click', () => {
+      HortaDb.logout();
+      window.location.href = 'login.html';
+    });
+
+    // Lógica do Drag and Drop
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const thumbnailsContainer = document.getElementById('thumbnails-container');
+    
+    // Armazena as imagens convertidas em base64
+    let uploadedImages = [];
+
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    // Efeitos de Hover no Drag
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+      }, false);
+    });
+
+    // Receber os arquivos dropped
+    dropZone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      handleFiles(files);
+    });
+
+    // Receber os arquivos via seletor clássico
+    fileInput.addEventListener('change', () => {
+      handleFiles(fileInput.files);
+    });
+
+    // Função para processar os arquivos de imagem e gerar thumbnails
+    function handleFiles(files) {
+      const fileList = Array.from(files);
+      
+      fileList.forEach(file => {
+        if (!file.type.startsWith('image/')) {
+          alert('Por favor, envie apenas arquivos de imagem.');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          const base64data = reader.result;
+          uploadedImages.push(base64data);
+
+          // Criar contêiner de thumbnail
+          const thumbContainer = document.createElement('div');
+          thumbContainer.className = 'thumbnail-container';
+          
+          const img = document.createElement('img');
+          img.src = base64data;
+          
+          const removeBtn = document.createElement('button');
+          removeBtn.className = 'thumbnail-remove';
+          removeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+          removeBtn.type = 'button';
+          
+          // Função para remover imagem individual
+          removeBtn.onclick = () => {
+            const index = uploadedImages.indexOf(base64data);
+            if (index > -1) {
+              uploadedImages.splice(index, 1);
+            }
+            thumbContainer.remove();
+          };
+
+          thumbContainer.appendChild(img);
+          thumbContainer.appendChild(removeBtn);
+          thumbnailsContainer.appendChild(thumbContainer);
+        };
+      });
+    }
+
+    // Formulário de Cadastro de Terreno
+    const landForm = document.getElementById('land-registration-form');
+    const successModal = document.getElementById('success-modal');
+    const btnGoDashboard = document.getElementById('btn-go-dashboard');
+
+    landForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const address = document.getElementById('land-address').value.trim();
+      const title = document.getElementById('land-title').value.trim();
+      const size = parseInt(document.getElementById('land-size').value);
+      const sun = document.getElementById('land-sun').value;
+      const water = document.getElementById('land-water').value;
+      const soil = document.getElementById('land-soil').value.trim();
+
+      // Usar a primeira imagem carregada ou imagem default se nenhuma for enviada
+      const image = uploadedImages.length > 0 ? uploadedImages[0] : 'https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600&auto=format&fit=crop';
+
+      // Gerar coordenadas x e y aleatórias no mapa para simulação gráfica (evitar sobreposição direta no centro)
+      const x = Math.floor(Math.random() * 65) + 15; // De 15% a 80% do mapa
+      const y = Math.floor(Math.random() * 55) + 20; // De 20% a 75% do mapa
+
+      // Criar o novo objeto do terreno
+      const listLands = HortaDb.getLands();
+      const nextId = listLands.length > 0 ? Math.max(...listLands.map(l => l.id)) + 1 : 1;
+
+      const newLand = {
+        id: nextId,
+        title,
+        address,
+        size,
+        sun,
+        water,
+        soil,
+        owner: currentUser.name,
+        contact: currentUser.email,
+        image,
+        x,
+        y
+      };
+
+      // Salvar no localStorage
+      HortaDb.saveLand(newLand);
+
+      // Mostrar modal de sucesso
+      successModal.style.display = 'flex';
+
+      // Evento para ir ao Dashboard
+      btnGoDashboard.addEventListener('click', () => {
+        window.location.href = 'dashboard.html#mapa';
+      });
+    });
+  </script>
+</body>
+</html>

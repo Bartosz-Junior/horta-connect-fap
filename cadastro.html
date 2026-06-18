@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro | HortaConecta</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Folha de Estilo Global -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 500px;">
+      <div class="auth-header">
+        <div class="auth-logo">
+          <i class="fa-solid fa-seedling"></i>
+          <span>HortaConecta</span>
+        </div>
+        <p>Junte-se à maior rede de Hortas Sustentáveis</p>
+      </div>
+
+      <form id="register-form">
+        <!-- Seleção de Perfil (Atores Sociais) -->
+        <div class="form-group">
+          <label>Selecione seu Perfil de Atuação (ODS 2)</label>
+          <div class="profile-tabs">
+            <div class="profile-tab active" data-profile="Sociedade Civil">
+              <i class="fa-solid fa-user-group"></i>
+              <span>Cidadão</span>
+            </div>
+            <div class="profile-tab" data-profile="ONG">
+              <i class="fa-solid fa-hand-holding-hand"></i>
+              <span>ONG</span>
+            </div>
+            <div class="profile-tab" data-profile="Escola">
+              <i class="fa-solid fa-school"></i>
+              <span>Escola</span>
+            </div>
+            <div class="profile-tab" data-profile="Setor Produtivo">
+              <i class="fa-solid fa-building-wheat"></i>
+              <span>Empresa</span>
+            </div>
+            <div class="profile-tab" data-profile="Gestão Pública">
+              <i class="fa-solid fa-landmark"></i>
+              <span>Poder Público</span>
+            </div>
+          </div>
+          <!-- Campo oculto para o formulário capturar o perfil ativo -->
+          <input type="hidden" id="profile-value" value="Sociedade Civil">
+        </div>
+
+        <div class="form-group">
+          <label id="name-label" for="name">Nome Completo</label>
+          <input type="text" id="name" class="form-control" placeholder="Ana Maria Terra" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail Corporativo ou Pessoal</label>
+          <input type="email" id="email" class="form-control" placeholder="ana@exemplo.com" required>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="city">Cidade</label>
+            <input type="text" id="city" class="form-control" placeholder="Ex: São Paulo" required>
+          </div>
+          <div class="form-group">
+            <label for="state">Estado</label>
+            <input type="text" id="state" class="form-control" placeholder="Ex: SP" maxlength="2" style="text-transform: uppercase;" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Criar uma Senha Segura</label>
+          <input type="password" id="password" class="form-control" placeholder="Mínimo 6 caracteres" minlength="6" required>
+        </div>
+
+        <!-- Termos e ODS Checkbox -->
+        <div class="form-group" style="display: flex; gap: 8px; align-items: flex-start; font-size: 0.8rem; color: var(--text-light);">
+          <input type="checkbox" id="terms" required style="margin-top: 4px;">
+          <label for="terms" style="margin: 0; line-height: 1.3;">
+            Declaro estar ciente de que a iniciativa apoia o desenvolvimento agroecológico local e a partilha de insumos com base na Agenda ODS 2 da ONU.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 14px;">
+          Concluir Meu Cadastro <i class="fa-solid fa-check"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Já possui cadastro? <a href="login.html">Voltar ao Login</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Sucesso (Feedback Visual Premium) -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-content">
+      <div class="modal-icon">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3>Cadastro Realizado com Sucesso!</h3>
+      <p id="success-message">Seja bem-vindo(a) ao ecossistema HortaConecta. Você será redirecionado(a) para o login em breve...</p>
+      <button class="btn-primary" id="btn-go-login" style="margin: 0 auto; padding: 12px 24px;">
+        Acessar a Plataforma Agora
+      </button>
+    </div>
+  </div>
+
+  <!-- Banco de Dados Simulado -->
+  <script src="js/data.js"></script>
+  <!-- Lógica da Tela de Cadastro -->
+  <script>
+    const tabs = document.querySelectorAll('.profile-tab');
+    const profileValue = document.getElementById('profile-value');
+    const nameLabel = document.getElementById('name-label');
+    const nameInput = document.getElementById('name');
+    const registerForm = document.getElementById('register-form');
+    const successModal = document.getElementById('success-modal');
+    const btnGoLogin = document.getElementById('btn-go-login');
+
+    // Interação das Abas de Perfil (Atores do ESG)
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active de todas
+        tabs.forEach(t => t.classList.remove('active'));
+        
+        // Ativa a clicada
+        tab.classList.add('active');
+        const profile = tab.getAttribute('data-profile');
+        profileValue.value = profile;
+
+        // Customizar labels/placeholders baseados no perfil para UX mais premium
+        if (profile === 'Sociedade Civil') {
+          nameLabel.innerText = 'Nome Completo';
+          nameInput.placeholder = 'Ana Maria Terra';
+        } else if (profile === 'ONG') {
+          nameLabel.innerText = 'Razão Social / Nome da ONG';
+          nameInput.placeholder = 'Associação Agroecológica Horta Feliz';
+        } else if (profile === 'Escola') {
+          nameLabel.innerText = 'Nome da Instituição de Ensino';
+          nameInput.placeholder = 'Escola Estadual Monteiro Lobato';
+        } else if (profile === 'Setor Produtivo') {
+          nameLabel.innerText = 'Nome da Empresa / Cooperativa';
+          nameInput.placeholder = 'Cooperativa Agrícola Verde e Companhia';
+        } else if (profile === 'Gestão Pública') {
+          nameLabel.innerText = 'Órgão Público / Secretaria';
+          nameInput.placeholder = 'Secretaria de Abastecimento e Agricultura';
+        }
+      });
+    });
+
+    // Envio do formulário
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = nameInput.value.trim();
+      const email = document.getElementById('email').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const state = document.getElementById('state').value.trim().toUpperCase();
+      const password = document.getElementById('password').value;
+      const profile = profileValue.value;
+
+      // Verificar se o e-mail já existe no banco mockado
+      const users = HortaDb.getUsers();
+      if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+        alert('Este endereço de e-mail já está cadastrado em nossa rede.');
+        return;
+      }
+
+      // Adicionar no banco de dados mockado
+      const newUser = { name, email, city, state, password, profile };
+      HortaDb.saveUser(newUser);
+
+      // Exibir feedback visual de sucesso
+      successModal.style.display = 'flex';
+
+      // Redirecionamento automático após 3.5 segundos
+      const redirectTimer = setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 3500);
+
+      // Botão para pular a espera e ir direto
+      btnGoLogin.addEventListener('click', () => {
+        clearTimeout(redirectTimer);
+        window.location.href = 'login.html';
+      });
+    });
+  </script>
+</body>
+</html>
