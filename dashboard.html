@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | HortaConecta</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Folha de Estilo Global -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- BARRA LATERAL DE NAVEGAÇÃO -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-seedling"></i>
+        <span>HortaConecta</span>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="menu-item active" data-view="mapa">
+          <a href="#mapa">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <span>Mapeamento & Mapa</span>
+          </a>
+        </li>
+        <li class="menu-item" data-view="plantio">
+          <a href="#plantio">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Guia de Plantio</span>
+          </a>
+        </li>
+        <li class="menu-item" data-view="calendario">
+          <a href="#calendario">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Calendário</span>
+          </a>
+        </li>
+        <li class="menu-item" data-view="insumos">
+          <a href="#insumos">
+            <i class="fa-solid fa-toolbox"></i>
+            <span>Banco de Insumos</span>
+          </a>
+        </li>
+        <li class="menu-item" data-view="marketplace">
+          <a href="#marketplace">
+            <i class="fa-solid fa-store"></i>
+            <span>Marketplace & Doação</span>
+          </a>
+        </li>
+        <!-- Link para arquivo externo estruturado com o mesmo layout -->
+        <li class="menu-item">
+          <a href="cadastrar-terreno.html">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span>Cadastrar Terreno</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Painel de Perfil no Rodapé da Sidebar -->
+      <div class="sidebar-profile">
+        <div class="profile-avatar" id="user-avatar">U</div>
+        <div class="profile-info">
+          <h4 id="user-name">Carregando...</h4>
+          <p id="user-profile">Perfil</p>
+        </div>
+        <button class="logout-btn" id="logout-button" title="Sair da plataforma">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL DINÂMICO -->
+    <main class="main-content">
+      
+      <!-- Cabeçalho do Conteúdo -->
+      <header class="content-header">
+        <div>
+          <h1 id="view-title">Mapeamento Inteligente</h1>
+          <p id="view-subtitle">Explore terrenos ociosos disponíveis para cultivo urbano e rural.</p>
+        </div>
+        <!-- Botão Mobile para abrir a sidebar se necessário -->
+        <button id="mobile-toggle" class="btn-outline d-none" style="padding: 10px;"><i class="fa-solid fa-bars"></i></button>
+      </header>
+
+      <!-- ====================================================================
+           1. SEÇÃO: DASHBOARD PRINCIPAL & MAPA INTERATIVO
+           ==================================================================== -->
+      <section id="view-mapa" class="view-section active">
+        
+        <!-- Cards Estatísticos ESG no Topo -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3>Volume Colhido (Total)</h3>
+              <div class="stat-number">12.850<span style="font-size: 1.2rem;"> kg</span></div>
+              <div class="stat-trend"><i class="fa-solid fa-circle-arrow-up"></i> +12% este mês</div>
+            </div>
+            <div class="stat-icon">
+              <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3>Famílias Beneficiadas</h3>
+              <div class="stat-number">435</div>
+              <div class="stat-trend"><i class="fa-solid fa-circle-arrow-up"></i> +8 novas hortas</div>
+            </div>
+            <div class="stat-icon">
+              <i class="fa-solid fa-people-roof"></i>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3>Área Verde Recuperada</h3>
+              <div class="stat-number">1.670<span style="font-size: 1.2rem;"> m²</span></div>
+              <div class="stat-trend"><i class="fa-solid fa-circle-arrow-up"></i> ODS 2 Atingido em 82%</div>
+            </div>
+            <div class="stat-icon">
+              <i class="fa-solid fa-tree"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layout do Mapa: Busca e Mapa lado a lado -->
+        <div class="dashboard-map-layout">
+          <!-- Filtros de Busca e Listagem Lateral -->
+          <div class="search-panel">
+            <h3><i class="fa-solid fa-filter"></i> Filtros de Terrenos</h3>
+            
+            <div class="filter-group">
+              <input type="text" id="search-input" class="form-control" placeholder="Buscar por endereço ou nome...">
+            </div>
+
+            <div class="filter-row">
+              <div class="filter-group">
+                <label for="filter-sun">Sol</label>
+                <select id="filter-sun" class="form-control" style="padding: 8px 12px; font-size: 0.85rem;">
+                  <option value="">Todos</option>
+                  <option value="Alta">Alta Incidência</option>
+                  <option value="Média">Média</option>
+                  <option value="Baixa">Baixa</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="filter-water">Água Disponível</label>
+                <select id="filter-water" class="form-control" style="padding: 8px 12px; font-size: 0.85rem;">
+                  <option value="">Todos</option>
+                  <option value="Sim">Sim</option>
+                  <option value="Não">Não</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-size">Área Mínima</label>
+              <select id="filter-size" class="form-control" style="padding: 8px 12px; font-size: 0.85rem;">
+                <option value="0">Qualquer tamanho</option>
+                <option value="150">A partir de 150 m²</option>
+                <option value="300">A partir de 300 m²</option>
+                <option value="500">A partir de 500 m²</option>
+              </select>
+            </div>
+
+            <div class="lands-list-container" id="lands-list">
+              <!-- Cards dinâmicos inseridos via JS -->
+            </div>
+          </div>
+
+          <!-- Container do Mapa Simulado -->
+          <div class="map-canvas-container">
+            <div class="simulated-map" id="map-canvas">
+              <div class="simulated-park"></div>
+              <div class="simulated-river"></div>
+              <!-- Pins dinâmicos inseridos via JS -->
+              
+              <!-- Popover de Detalhes do Terreno (Simulado) -->
+              <div class="map-popover" id="land-popover">
+                <!-- Conteúdo dinâmico via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================
+           2. SEÇÃO: GUIA DE PLANTIO
+           ==================================================================== -->
+      <section id="view-plantio" class="view-section">
+        <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+          <span style="font-size: 0.9rem; color: var(--text-light);"><i class="fa-solid fa-circle-info"></i> Cultive plantas companheiras nos mesmos canteiros para controle natural de pragas e melhoria de nutrientes no solo.</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-outline btn-active-category" data-cat="all">Todos</button>
+            <button class="btn-outline" data-cat="Folhas">Folhas</button>
+            <button class="btn-outline" data-cat="Frutos">Frutos</button>
+            <button class="btn-outline" data-cat="Raízes">Raízes</button>
+            <button class="btn-outline" data-cat="Ervas">Ervas</button>
+          </div>
+        </div>
+        
+        <div class="plants-grid" id="plants-container">
+          <!-- Cards de plantio dinâmicos via JS -->
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           3. SEÇÃO: CALENDÁRIO COMUNITÁRIO
+           ==================================================================== -->
+      <section id="view-calendario" class="view-section">
+        <div class="calendar-layout">
+          
+          <!-- Lista de Eventos / Timeline -->
+          <div class="calendar-main">
+            <h2 style="font-size: 1.25rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-clock-rotate-left" style="color: var(--primary);"></i> Próximas Atividades Coletivas
+            </h2>
+            <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 20px;">Participe dos mutirões locais e troque saberes com agricultores urbanos da sua região.</p>
+            
+            <div class="timeline-list" id="events-timeline">
+              <!-- Eventos dinâmicos inseridos via JS -->
+            </div>
+          </div>
+
+          <!-- Banner Lateral informativo de Impacto ESG -->
+          <div class="calendar-sidebar">
+            <div class="info-banner-esg">
+              <h3><i class="fa-solid fa-globe"></i> Agenda ODS 2 da ONU</h3>
+              <p style="margin-bottom: 15px;">Ao participar dessas atividades, você colabora diretamente com:</p>
+              <ul style="list-style: none; font-size: 0.8rem; display: flex; flex-direction: column; gap: 10px; opacity: 0.95;">
+                <li><i class="fa-solid fa-leaf" style="color: var(--secondary-light);"></i> <strong>Meta 2.3:</strong> Dobrar a produtividade agrícola e a renda dos pequenos produtores de alimentos locais.</li>
+                <li><i class="fa-solid fa-leaf" style="color: var(--secondary-light);"></i> <strong>Meta 2.4:</strong> Garantir sistemas sustentáveis de produção e aplicar práticas agrícolas resilientes.</li>
+              </ul>
+            </div>
+            
+            <!-- Widget de Mini Calendário Estático (Somente Visual para UX Premium) -->
+            <div style="background-color: #ffffff; border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 20px; box-shadow: var(--shadow-md);">
+              <h4 style="font-size: 0.9rem; margin-bottom: 12px; text-align: center;">Junho 2026</h4>
+              <div style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.75rem; gap: 8px;">
+                <span style="font-weight: bold; color: var(--text-light);">D</span>
+                <span style="font-weight: bold; color: var(--text-light);">S</span>
+                <span style="font-weight: bold; color: var(--text-light);">T</span>
+                <span style="font-weight: bold; color: var(--text-light);">Q</span>
+                <span style="font-weight: bold; color: var(--text-light);">Q</span>
+                <span style="font-weight: bold; color: var(--text-light);">S</span>
+                <span style="font-weight: bold; color: var(--text-light);">S</span>
+                <!-- Dias vazios para alinhar início em Segunda -->
+                <span></span>
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+                <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
+                <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <!-- Dias com atividade em destaque -->
+                <span style="background-color: var(--primary); color: #fff; border-radius: 50%; font-weight: bold;">20</span>
+                <span>21</span>
+                <span style="background-color: var(--secondary); color: #fff; border-radius: 50%; font-weight: bold;">22</span>
+                <span>23</span><span>24</span>
+                <span style="background-color: var(--primary); color: #fff; border-radius: 50%; font-weight: bold;">25</span>
+                <span>26</span><span>27</span>
+                <span style="background-color: var(--accent); color: #fff; border-radius: 50%; font-weight: bold;">28</span>
+                <span>29</span><span>30</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           4. SEÇÃO: BANCO DE INSUMOS (ECONOMIA COMPARTILHADA)
+           ==================================================================== -->
+      <section id="view-insumos" class="view-section">
+        <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+          <span style="font-size: 0.9rem; color: var(--text-light);"><i class="fa-solid fa-circle-question"></i> Possui enxadas, adubo, sementes ou mudas sobrando? Doe ou empreste para fortalecer hortas vizinhas!</span>
+          <button class="btn-primary" id="btn-add-insumo" style="font-size: 0.85rem; padding: 8px 16px;"><i class="fa-solid fa-plus"></i> Oferecer Insumo</button>
+        </div>
+
+        <div class="inputs-grid" id="inputs-container">
+          <!-- Cards de insumos dinâmicos via JS -->
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           5. SEÇÃO: MARKETPLACE C2B & DOAÇÕES
+           ==================================================================== -->
+      <section id="view-marketplace" class="view-section">
+        <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+          <span style="font-size: 0.9rem; color: var(--text-light);"><i class="fa-solid fa-hand-holding-dollar"></i> Adquira produtos excedentes diretamente das hortas a preços sociais ou solicite alimentos disponibilizados para doação livre.</span>
+          <button class="btn-primary" id="btn-add-product" style="font-size: 0.85rem; padding: 8px 16px;"><i class="fa-solid fa-plus"></i> Anunciar Excedente</button>
+        </div>
+
+        <div class="marketplace-grid" id="products-container">
+          <!-- Cards de produtos dinâmicos via JS -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- CHATBOT FLUTUANTE DE SUPORTE -->
+  <div class="chatbot-widget" id="chatbot-container">
+    
+    <!-- Caixa de Mensagens -->
+    <div class="chatbot-box">
+      <!-- Cabeçalho -->
+      <div class="chatbot-header">
+        <div class="chatbot-header-icon">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <div class="chatbot-header-info">
+          <h4>HortaBot Agroecológico</h4>
+          <p>Dicas de plantio e suporte ODS 2</p>
+        </div>
+      </div>
+      
+      <!-- Mensagens Roláveis -->
+      <div class="chatbot-messages" id="chat-messages">
+        <div class="chat-bubble bot">
+          Olá! Sou o **HortaBot**, seu assistente virtual. Digite suas dúvidas sobre solos, regas, pragas ou digite uma palavra-chave como <strong>insumos</strong> ou <strong>ODS</strong>. 🌱
+        </div>
+      </div>
+      
+      <!-- Atalhos rápidos para perguntas comuns -->
+      <div class="chat-chips">
+        <span class="chat-chip" data-query="Dicas de Rega">💧 Rega</span>
+        <span class="chat-chip" data-query="Manejo de Pragas">🐛 Pragas</span>
+        <span class="chat-chip" data-query="Preparar o Solo">🪱 Solo</span>
+        <span class="chat-chip" data-query="O que é ODS 2?">🇺🇳 ODS 2</span>
+      </div>
+
+      <!-- Área de Input -->
+      <div class="chatbot-input-area">
+        <input type="text" id="chat-input" placeholder="Pergunte-me algo sobre cultivo...">
+        <button class="chatbot-send-btn" id="chat-send-btn">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Botão de Ativação -->
+    <button class="chatbot-toggle" id="chat-toggle-btn">
+      <i class="fa-solid fa-comments"></i>
+      <i class="fa-solid fa-times"></i>
+    </button>
+  </div>
+
+  <!-- MODAL DE FEEDBACK INTERATIVO DE AÇÕES (SUCESSO) -->
+  <div class="modal-overlay" id="action-modal">
+    <div class="modal-content">
+      <div class="modal-icon" style="background-color: var(--primary-light); color: var(--primary);">
+        <i class="fa-solid fa-seedling"></i>
+      </div>
+      <h3 id="action-modal-title">Operação Concluída</h3>
+      <p id="action-modal-desc">Sua solicitação foi processada com sucesso no sistema.</p>
+      <button class="btn-primary" id="btn-close-action-modal" style="margin: 0 auto;">
+        Entendido
+      </button>
+    </div>
+  </div>
+
+  <!-- Banco de Dados Simulado -->
+  <script src="js/data.js"></script>
+  <!-- Lógica Geral do Painel, Mapa e Chatbot -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>
